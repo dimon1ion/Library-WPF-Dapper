@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
+using Library_WPF.Properties;
+using Library_WPF.ViewModel;
 
 namespace Library_WPF.View
 {
@@ -24,13 +27,15 @@ namespace Library_WPF.View
         public MainWindow()
         {
             InitializeComponent();
-            DapperExecutor.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=Library; Integrated Security=True;";
+            this.DataContext = new SignInViewModel(this);
         }
 
         private void Label_MouseDown(object sender, MouseButtonEventArgs e)
         {
             SignUpWindow signUpWindow = new SignUpWindow();
+            this.Visibility = Visibility.Hidden;
             signUpWindow.ShowDialog();
+            this.Visibility = Visibility.Visible;
         }
 
         private void Label_MouseEnter(object sender, MouseEventArgs e)
@@ -41,6 +46,11 @@ namespace Library_WPF.View
         private void Label_MouseLeave(object sender, MouseEventArgs e)
         {
             (sender as Label).Foreground = Brushes.Blue;
+        }
+
+        private void PasswordBoxPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ((SignInViewModel)this.DataContext).Password = (sender as PasswordBox).Password;
         }
     }
 }
