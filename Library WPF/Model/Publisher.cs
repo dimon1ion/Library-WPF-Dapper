@@ -4,10 +4,9 @@ using System.Text;
 
 namespace Library_WPF.Model
 {
-    public class Admin
+    public class Publisher
     {
         public int Id { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public string Name { get; set; }
     }
 }

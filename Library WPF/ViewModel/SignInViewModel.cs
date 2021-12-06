@@ -118,9 +118,11 @@ namespace Library_WPF.ViewModel
                     {
                         if (admin.Password == Password)
                         {
-                            //mainWindow.Visibility = Visibility.Hidden;
+                            mainWindow.Visibility = Visibility.Hidden;
                             MessageBox.Show("Test Admin");
-
+                            AdminWindow adminWindow = new AdminWindow();
+                            adminWindow.ShowDialog();
+                            mainWindow.Close(); //--------------------------------Delete After
                             return;
                         }
                     }

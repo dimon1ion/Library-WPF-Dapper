@@ -13,6 +13,7 @@ Name nvarchar(100) NOT NULL
 
 CREATE TABLE Books(
 Id INT PRIMARY KEY IDENTITY(1,1),
+Name nvarchar(100) NOT NULL,
 AuthorId int NOT NULL FOREIGN KEY REFERENCES Authors(Id),
 Genre int NOT NULL,
 PublisherId int NOT NULL FOREIGN KEY REFERENCES Publishers(Id),
@@ -49,8 +50,9 @@ Password nvarchar(100) NOT NULL
 CREATE TABLE BookSales(
 Id INT PRIMARY KEY IDENTITY(1,1),
 BookId int NOT NULL FOREIGN KEY REFERENCES Books(Id),
-SalesmanId int NOT NULL FOREIGN KEY REFERENCES Salesmans(Id),
+--SalesmanId int NOT NULL FOREIGN KEY REFERENCES Salesmans(Id),
 CustomerId int NOT NULL FOREIGN KEY REFERENCES Customers(Id),
+Purchase_date datetime NOT NULL,
 Selling_price money NOT NULL
 )
 
@@ -85,3 +87,11 @@ SELECT COUNT(Id) FROM Customers WHERE Customers.Login = 's'
 
 --INSERT INTO Salesmen(FirstName, LastName, Login, Password)
 --VALUES ('sales', 'girl', 'sexy', 'sex')
+
+
+SELECT Books.Id, Authors.FirstName, Authors.LastName,
+	Books.Genre, Publishers.Name, Books.Number_of_pages,
+	Books.Year_of_publishing, Books.Cost_price,
+	Books.Selling_price, Books.Continuation, Books.Quantity
+	FROM Books, Authors, Publishers
+WHERE Books.AuthorId = Authors.Id AND Books.PublisherId = Publishers.Id

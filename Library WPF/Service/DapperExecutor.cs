@@ -39,12 +39,12 @@ namespace Library_WPF.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> Get<T>(string query)
+        public IEnumerable<T> Get<T>(string query, object param = null)
         {
             using (SqlConnection connection = DapperExecutor.GetConnection())
             {
                 connection.Open();
-                return connection.Query<T>(query);
+                return connection.Query<T>(query, param);
             }
         }
         public T GetFirst<T>(string query, object param = null)

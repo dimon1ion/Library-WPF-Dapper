@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Library_WPF.View"
         mc:Ignorable="d"
         Title="SignUp" Height="450" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding SignUp}" Key="Enter"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

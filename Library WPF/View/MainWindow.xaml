@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Library_WPF.View"
         mc:Ignorable="d"
         Title="Sign in" Height="450" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding SignIn}" Key="Enter"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -70,7 +73,6 @@
             <Button Grid.Column="1" Grid.Row="0" 
                     Content="Sign in" FontWeight="Bold"
                     Command="{Binding SignIn}"/>
-            <!--Click="Button_Click"-->
             <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
                    VerticalAlignment="Top"
                    Content="No account? Create one!" Foreground="Blue" 
