@@ -111,47 +111,57 @@ namespace Library_WPF.ViewModel
 
                 if (!error)
                 {
+                    bool loginfind = false;
                     Admin admin;
                     Salesman salesman;
                     Customer customer;
                     if ((admin = dapper.GetFirst<Admin>($"SELECT * FROM Admins WHERE Admins.Login = @Login", new { Login = Login })) != null)
                     {
+                        loginfind = true;
                         if (admin.Password == Password)
                         {
                             mainWindow.Visibility = Visibility.Hidden;
                             MessageBox.Show("Test Admin");
                             AdminWindow adminWindow = new AdminWindow();
                             adminWindow.ShowDialog();
-                            mainWindow.Close(); //--------------------------------Delete After
+                            mainWindow.Close();
                             return;
                         }
                     }
                     if ((salesman = dapper.GetFirst<Salesman>($"SELECT * FROM Salesmen WHERE Salesmen.Login = @Login", new { Login = Login })) != null)
                     {
+                        loginfind = true;
                         if (salesman.Password == Password)
                         {
                             //mainWindow.Visibility = Visibility.Hidden;
                             MessageBox.Show("Test Salesman");
 
+                            mainWindow.Close();
                             return;
                         }
                     }
                     if ((customer = dapper.GetFirst<Customer>($"SELECT * FROM Customers WHERE Customers.Login = @Login", new { Login = Login })) != null)
                     {
-                        if (customer.Password != Password)
+                        loginfind = true;
+                        if (customer.Password == Password)
                         {
-                            ErrorPassword = "* password is incorrect";
+
+                            mainWindow.Close();
                             return;
                         }
                         //mainWindow.Visibility = Visibility.Hidden;
                         MessageBox.Show("Test Customer");
                     }
-                    else
+                    if (!loginfind)
                     {
                         ErrorLogin = "* We couldn't find an account with that login";
                         return;
                     }
-                    //mainWindow.Close();
+                    else
+                    {
+                        ErrorPassword = "* password is incorrect";
+                        return;
+                    }
                 }
 
             });

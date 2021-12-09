@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_WPF.View"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800">
+        Title="AdminWindow" Height="450" Width="800" Background="Brown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,13 +20,13 @@
                   HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"/>
         <Grid Grid.Column="1">
             <Label Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top"
-                   Content="Hello Admin!" FontSize="14" FontFamily="Lemon"/>
+                   Content="Hello Admin!" FontSize="14" FontFamily="Lemon" Foreground="Wheat"/>
         </Grid>
-        <Grid Grid.RowSpan="2">
+        <Grid Grid.RowSpan="3">
             <Grid.Resources>
                 <Style TargetType="Button">
-                    <Setter Property="Height" Value="50"/>
-                    <Setter Property="Width" Value="120"/>
+                    <Setter Property="Height" Value="55"/>
+                    <Setter Property="Width" Value="110"/>
                     <Setter Property="Margin" Value="2,1,2,0"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                 </Style>
@@ -34,10 +34,10 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3.5*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="Choose Action" FontSize="16" FontFamily="Lemon"
+            <Label Content="Choose Action" FontSize="16" FontFamily="Lemon" Foreground="AliceBlue"
                    HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
@@ -45,20 +45,49 @@
                     <Button Content="Show Customers" Command="{Binding ShowCustomers}"/>
                     <Button Content="Show Managers" Command="{Binding ShowManagers}"/>
                     <Button Content="Show Admins" Command="{Binding ShowAdmins}"/>
+                    <Button Content="Show Authors" Command="{Binding ShowAuthors}"/>
+                    <Button Content="Show Publishers" Command="{Binding ShowPublishers}"/>
+                    <Button Content="Show Genres" Command="{Binding ShowGenres}"/>
                     <Button Content="Show Books" Command="{Binding ShowBooks}">
                         <Button.ToolTip>
                             <ToolTip Content="Show and change only book options"/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Content="Show Authors" Command="{Binding ShowAuthors}"/>
-                    <Button Content="Show Publishers" Command="{Binding ShowPublishers}"/>
-                    <Button Content="Show Sales"/>
-                    <Button Content="Show Shelved Books"/>
-                    <Button Content="Show Stocks"/>
+                    <Button Content="Show Sales" Command="{Binding ShowSales}"/>
+                    <Button Command="{Binding ShowShelvedBooks}">
+                        <TextBlock>
+                            Show Shelved <LineBreak/> books
+                        </TextBlock>
+                    </Button>
+                    <Button Content="Show Stocks" Command="{Binding ShowStocks}"/>
+                    <Button Command="{Binding ShowStockBooks}">
+                        <TextBlock>
+                            Show books <LineBreak/> on stocks
+                        </TextBlock>
+                    </Button>
                 </TabPanel>
             </ScrollViewer>
 
         </Grid>
 
+        <TabPanel Grid.Row="2" Grid.Column="1"
+                  HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TabPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Height" Value="35"/>
+                    <Setter Property="Width" Value="80"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Style.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </TabPanel.Resources>
+            <Button Content="Delete" FontWeight="Bold" Background="Red"/>
+            <Button Content="Update" FontWeight="Bold" Background="Yellow" Foreground="Black"/>
+            <Button Content="Add" FontWeight="Bold" Background="Green"/>
+        </TabPanel>
+        
     </Grid>
 </Window>
