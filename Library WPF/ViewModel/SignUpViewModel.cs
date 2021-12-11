@@ -239,7 +239,7 @@ namespace Library_WPF.ViewModel
                     }
                     else
                     {
-                        dapper.Insert("INSERT INTO Customers(FirstName, LastName, Login, Password) VALUES (@FirstName, @LastName, @Login, @Password)",
+                        dapper.InsertUpdate("INSERT INTO Customers(FirstName, LastName, Login, Password) VALUES (@FirstName, @LastName, @Login, @Password)",
                             new { FirstName = FirstName, LastName = LastName, Login = Login, Password = Password });
                         _signUpWindow.Close();
                     }

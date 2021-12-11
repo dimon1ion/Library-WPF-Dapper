@@ -9,6 +9,6 @@ namespace Library_WPF.Model
         public int Id { get; set; }
         public int StockId { get; set; }
         public int BookId { get; set; }
-        public int StockPrercent { get; set; }
+        public int StockPercent { get; set; }
     }
 }

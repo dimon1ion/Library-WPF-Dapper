@@ -24,13 +24,12 @@ namespace Library_WPF.Service
             return new SqlConnection(ConnectionString);
         }
 
-        public async void Insert(string query, object param = null)
+        public async void InsertUpdate(string query, object param = null)
         {
             using (SqlConnection connection = DapperExecutor.GetConnection())
             {
                 connection.Open();
                 await connection.ExecuteAsync(query, param);
-                MessageBox.Show("Registered successfully!");
             }
         }
 

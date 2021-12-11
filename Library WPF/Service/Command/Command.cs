@@ -31,6 +31,11 @@ namespace Library_WPF.Service.Command
             executeMethod(parameter);
         }
 
+        public void Check()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public event EventHandler CanExecuteChanged;
 
     }

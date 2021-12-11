@@ -63,5 +63,11 @@ namespace Library_WPF.View
 
             //grid.ItemsSource = data.AsDataView();
         }
+
+        private void grid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+
+        }
     }
 }

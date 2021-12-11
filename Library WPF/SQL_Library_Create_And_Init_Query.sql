@@ -126,7 +126,7 @@ WHERE Genres.Name = 'Drama'
 SELECT * FROM Customers
 
 --INSERT INTO Customers(FirstName, LastName, Login, Password)
---VALUES ('Di1', 'Ma', 'kaka', '1234567')
+--VALUES ('Di1', 'Ma', 'kaka', '12345678')
 
 SELECT COUNT(Id) FROM Customers WHERE Customers.Login = 's'
 
@@ -166,3 +166,5 @@ SELECT StocksBooks.Id, Stocks.Name[StockName], '\"' + Books.Name + '\" ' + Autho
 FROM StocksBooks, Stocks, Books, Authors
 WHERE StocksBooks.StockId = Stocks.Id AND StocksBooks.BookId = Books.Id 
 AND Books.AuthorId = Authors.Id
+
+UPDATE StocksBooks SET StockPercent
