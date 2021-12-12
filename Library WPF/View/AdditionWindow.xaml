@@ -1,0 +1,120 @@
+﻿<Window x:Class="Library_WPF.View.AdditionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library_WPF.View"
+        mc:Ignorable="d"
+        Title="AdditionWindow" Height="230" Width="550" MinHeight="230" MinWidth="250">
+    <Grid>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="ScrollViewer">
+                    <Setter Property="FontFamily" Value="Ink Free"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="16"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="TextAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" Visibility="{Binding AddSalesVisible}" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+
+                <TabPanel HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Book:"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Books}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Customer:"/>
+                        <ComboBox Width="120" 
+                                  ItemsSource="{Binding Customers}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Purchase_date:"/>
+                        <DatePicker/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Selling price:"/>
+                        <TextBox Width="60" Text="{Binding SellingPrice}"/>
+                    </StackPanel>
+                </TabPanel>
+
+            </ScrollViewer>
+            <ScrollViewer Grid.Row="0" Visibility="Hidden" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <!--Visibility="{Binding AddBookVisible}"-->
+                <!--<ScrollViewer.Resources>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="FontFamily" Value="Ink Free"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="16"/>
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+                </ScrollViewer.Resources>-->
+                <TabPanel HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Name:"/>
+                        <TextBox Width="100" Text="{Binding Name}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Author:"/>
+                        <ComboBox Width="120" 
+                                  ItemsSource="{Binding Authors}" SelectedItem="{Binding SelectedAuthor}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Genre:"/>
+                        <ComboBox Width="100" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Publisher:"/>
+                        <ComboBox Width="100" ItemsSource="{Binding Publishers}" SelectedItem="{Binding SelectedPublisher}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Number of pages:"/>
+                        <TextBox Width="60" Text="{Binding NumOfPages}" PreviewTextInput="TextBox_PreviewTextInput"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Year of publishing:"/>
+                        <TextBox Width="60" Text="{Binding YearOfPublishing}" PreviewTextInput="TextBox_PreviewTextInput"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Cost price:"/>
+                        <TextBox Width="60" Text="{Binding CostPrice}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Selling price:"/>
+                        <TextBox Width="60" Text="{Binding SellingPrice}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Continuation:"/>
+                        <CheckBox IsChecked="{Binding SelectedContinuation}" VerticalAlignment='Center'/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Quantity:"/>
+                        <TextBox Width="50" Text="{Binding Quantity}" PreviewTextInput="TextBox_PreviewTextInput"/>
+                    </StackPanel>
+                </TabPanel>
+            </ScrollViewer>
+            <Button Grid.Row="1" Width="200" 
+                    Background="Green" Foreground="White"
+                    Content="Add" FontWeight="Bold" FontSize="20" FontFamily="Ink Free" FontStyle="Italic"
+                    Command="{Binding AddCommand}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="30"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

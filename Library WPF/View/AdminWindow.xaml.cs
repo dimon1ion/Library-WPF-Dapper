@@ -66,8 +66,7 @@ namespace Library_WPF.View
 
         private void grid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-
+            ((AdminViewModel)this.DataContext).CheckCommand();
         }
     }
 }

@@ -7,6 +7,7 @@ using Library_WPF.Service.Interface;
 using Dapper;
 using System.Windows;
 using Library_WPF.Model;
+using System.Threading.Tasks;
 
 namespace Library_WPF.Service
 {
@@ -24,18 +25,13 @@ namespace Library_WPF.Service
             return new SqlConnection(ConnectionString);
         }
 
-        public async void InsertUpdate(string query, object param = null)
+        public async Task<int> InsertUpdateDelete(string query, object param = null)
         {
             using (SqlConnection connection = DapperExecutor.GetConnection())
             {
                 connection.Open();
-                await connection.ExecuteAsync(query, param);
+                return await connection.ExecuteAsync(query, param);
             }
-        }
-
-        public void Delete(string query)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<T> Get<T>(string query, object param = null)

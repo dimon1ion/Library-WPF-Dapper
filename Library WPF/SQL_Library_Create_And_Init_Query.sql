@@ -103,24 +103,27 @@ StockPercent int NOT NULL CONSTRAINT PercentCheck CHECK (0 < StockPercent AND St
 --VALUES ('Idk')
 
 --INSERT INTO Books(GenreId, AuthorId, PublisherId, Name, Number_of_pages, Continuation, Cost_price, Quantity, Year_of_publishing, Selling_price)
---VALUES(3, 1, 1, 'true', 204, 0, 10, 100, 2018, 0)
+--VALUES(1002, 2, 2, 'true', 204, 0, 10, 100, 2018, 0)
 
 --INSERT INTO BookSales(BookId, CustomerId, Purchase_date, Selling_price)
---VALUES (5, 1, GETDATE(), 0)
+--VALUES (1002, 1, GETDATE(), 0)
 
 --INSERT INTO ShelvedBooks(BookId, CustomerId)
---VALUES (5, 1)
+--VALUES (1002, 1)
 
 --INSERT INTO Stocks(Name)
 --VALUES ('Happy new Year')
 
 --INSERT INTO StocksBooks(BookId, StockId, StockPercent)
---VALUES (5, 1, 20)
+--VALUES (1, 1, 20)
 
+SELECT * FROM Genres
+SELECT * FROM Authors
+SELECT * FROM Publishers
 SELECT * FROM Books
 
 DELETE FROM Genres
-WHERE Genres.Name = 'Drama'
+WHERE Genres.Id = 2
 
 
 SELECT * FROM Customers
@@ -167,4 +170,5 @@ FROM StocksBooks, Stocks, Books, Authors
 WHERE StocksBooks.StockId = Stocks.Id AND StocksBooks.BookId = Books.Id 
 AND Books.AuthorId = Authors.Id
 
-UPDATE StocksBooks SET StockPercent
+INSERT INTO BookSales(BookId, CustomerId, Purchase_date, Selling_price)
+VALUES ()

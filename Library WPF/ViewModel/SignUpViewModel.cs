@@ -182,7 +182,7 @@ namespace Library_WPF.ViewModel
             _secondPassword = String.Empty;
             dapper = new DapperExecutor();
 
-            _signUp = new Command(obj =>
+            _signUp = new Command(async obj =>
             {
 
                 bool error = false;
@@ -239,7 +239,7 @@ namespace Library_WPF.ViewModel
                     }
                     else
                     {
-                        dapper.InsertUpdate("INSERT INTO Customers(FirstName, LastName, Login, Password) VALUES (@FirstName, @LastName, @Login, @Password)",
+                        await dapper.InsertUpdateDelete("INSERT INTO Customers(FirstName, LastName, Login, Password) VALUES (@FirstName, @LastName, @Login, @Password)",
                             new { FirstName = FirstName, LastName = LastName, Login = Login, Password = Password });
                         _signUpWindow.Close();
                     }

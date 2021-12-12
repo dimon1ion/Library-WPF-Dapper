@@ -79,7 +79,6 @@
                     <Setter Property="Height" Value="35"/>
                     <Setter Property="Width" Value="80"/>
                     <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="Foreground" Value="White"/>
                     <Style.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="20"/>
@@ -87,9 +86,9 @@
                     </Style.Resources>
                 </Style>
             </TabPanel.Resources>
-                <Button Content="Delete" IsEnabled="{Binding DeleteEnable}" Background="Red"/>
-            <Button Content="Update" Command="{Binding Update}" Background="Yellow" Foreground="Black"/>
-            <Button Content="Add" Background="Green"/>
+                <Button Content="Delete" Command="{Binding Delete}" Background="Red" Foreground="White"/>
+            <Button Content="Update" Command="{Binding Update}" Background="Yellow"/>
+            <Button Content="Add" Command="{Binding Add}" Background="Green" Foreground="White"/>
         </TabPanel>
         </ScrollViewer>
 
