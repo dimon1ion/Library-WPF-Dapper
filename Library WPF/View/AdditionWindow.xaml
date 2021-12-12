@@ -22,23 +22,61 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <ScrollViewer Grid.Row="0" Visibility="{Binding AddSalesVisible}" 
+            <ScrollViewer Grid.Row="0" Visibility="{Binding AddStockBooksVisible}" 
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
-
-                <TabPanel HorizontalAlignment="Center">
+                <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Stock:"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Stocks}"
+                                  SelectedItem="{Binding SelectedStock}"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Book:"/>
-                        <ComboBox Width="120" ItemsSource="{Binding Books}"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Books}"
+                                  SelectedItem="{Binding SelectedBookName}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Stock percent:"/>
+                        <TextBox Width="60" Text="{Binding StockPercent}" MaxLength="3" PreviewTextInput="TextBox_PreviewTextInput"/>
+                    </StackPanel>
+                </TabPanel>
+            </ScrollViewer>
+            <ScrollViewer Grid.Row="0" Visibility="{Binding AddShelvedBooksVisible}" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <!--Visibility="{Binding AddShelvedBooksVisible}"-->
+                <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Book:"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Books}"
+                                  SelectedItem="{Binding SelectedBookName}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Customer:"/>
-                        <ComboBox Width="120" 
-                                  ItemsSource="{Binding Customers}"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Customers}"
+                                  SelectedItem="{Binding SelectedCustomer}"/>
+                    </StackPanel>
+                </TabPanel>
+            </ScrollViewer>
+            <ScrollViewer Grid.Row="0" Visibility="{Binding AddSalesVisible}" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <!--Visibility="{Binding AddSalesVisible}"-->
+                <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Book:"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Books}"
+                                  SelectedItem="{Binding SelectedBookName}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Customer:"/>
+                        <ComboBox Width="120" ItemsSource="{Binding Customers}"
+                                  SelectedItem="{Binding SelectedCustomer}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Purchase_date:"/>
-                        <DatePicker/>
+                        <DatePicker SelectedDate="{Binding SelectedDate}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Selling price:"/>
@@ -47,21 +85,11 @@
                 </TabPanel>
 
             </ScrollViewer>
-            <ScrollViewer Grid.Row="0" Visibility="Hidden" 
+            <ScrollViewer Grid.Row="0" Visibility="{Binding AddBookVisible}" 
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
                 <!--Visibility="{Binding AddBookVisible}"-->
-                <!--<ScrollViewer.Resources>
-                    <Style TargetType="ScrollViewer">
-                        <Setter Property="FontFamily" Value="Ink Free"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="FontSize" Value="16"/>
-                    </Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="TextAlignment" Value="Center"/>
-                    </Style>
-                </ScrollViewer.Resources>-->
-                <TabPanel HorizontalAlignment="Center">
+                <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Name:"/>
                         <TextBox Width="100" Text="{Binding Name}"/>

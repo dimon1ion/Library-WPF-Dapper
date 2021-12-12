@@ -253,9 +253,16 @@ namespace Library_WPF.ViewModel
 
             _add = new Command(obj =>
             {
-                libraryActions.AddNewValue(_showAction, ref dataGrid);
-                Refresh();
-                
+                try
+                {
+                    libraryActions.AddNewValue(_showAction, ref dataGrid);
+                    Refresh();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error, check the selected row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }, obj =>
             {
                 return _showAction != TableAction.None;

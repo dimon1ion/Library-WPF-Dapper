@@ -808,16 +808,20 @@ namespace Library_WPF.Service
                         executor.InsertUpdateDelete(addQuery, new { Name = name });
                     }
                     break;
+                case TableAction.ShowStocks:
+                    {
+                        addQuery = "INSERT INTO Stocks(Name) " +
+                            "VALUES(@Name)";
+                        string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
+                        executor.InsertUpdateDelete(addQuery, new { Name = name });
+                    }
+                    break;
                 case TableAction.ShowBooks:
                 case TableAction.ShowSales:
+                case TableAction.ShowShelvedBooks:
+                case TableAction.ShowStockBooks:
                     AdditionWindow window = new AdditionWindow(tableAction, executor);
                     window.ShowDialog();
-                    break;
-                case TableAction.ShowShelvedBooks:
-                    break;
-                case TableAction.ShowStocks:
-                    break;
-                case TableAction.ShowStockBooks:
                     break;
                 case TableAction.None:
                     break;

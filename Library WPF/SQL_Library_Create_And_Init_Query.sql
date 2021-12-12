@@ -170,5 +170,5 @@ FROM StocksBooks, Stocks, Books, Authors
 WHERE StocksBooks.StockId = Stocks.Id AND StocksBooks.BookId = Books.Id 
 AND Books.AuthorId = Authors.Id
 
-INSERT INTO BookSales(BookId, CustomerId, Purchase_date, Selling_price)
+INSERT INTO StocksBooks(StockId, BookId, StockPercent)
 VALUES ()

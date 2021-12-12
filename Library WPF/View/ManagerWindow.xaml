@@ -1,11 +1,11 @@
-﻿<Window x:Class="Library_WPF.View.AdminWindow"
+﻿<Window x:Class="Library_WPF.View.ManagerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_WPF.View"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800" Background="Brown">
+        Title="ManagerWindow" Height="450" Width="800" Background="Brown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,7 +20,13 @@
                   HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" SelectionChanged="grid_SelectionChanged"/>
         <Grid Grid.Column="1">
             <Label Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top"
-                   Content="Hello Admin!" FontSize="14" FontFamily="Cooper Black" Foreground="Wheat" FontStyle="Normal" FontWeight="Normal"/>
+                    FontSize="14" FontFamily="Cooper Black" Foreground="Wheat" FontStyle="Normal" FontWeight="Normal">
+                <TextBlock>
+                    <Run Text="Hello"/>
+                    <Run Text="{Binding ManagerName}"/>
+                    <Run Text="!"/>
+                </TextBlock>
+            </Label>
         </Grid>
         <Grid Grid.RowSpan="3">
             <Grid.Resources>
@@ -73,24 +79,23 @@
         <ScrollViewer Grid.Row="2" Grid.Column="1" 
                       VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" 
                       HorizontalAlignment="Right" VerticalAlignment="Top">
-        <TabPanel>
-            <TabPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Height" Value="35"/>
-                    <Setter Property="Width" Value="80"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Style.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="20"/>
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </TabPanel.Resources>
+            <TabPanel>
+                <TabPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="35"/>
+                        <Setter Property="Width" Value="80"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </TabPanel.Resources>
                 <Button Content="Delete" Command="{Binding Delete}" Background="Red" Foreground="White"/>
-            <Button Content="Update" Command="{Binding Update}" Background="Yellow"/>
-            <Button Content="Add" Command="{Binding Add}" Background="Green" Foreground="White"/>
-        </TabPanel>
+                <Button Content="Update" Command="{Binding Update}" Background="Yellow"/>
+                <Button Content="Add" Command="{Binding Add}" Background="Green" Foreground="White"/>
+            </TabPanel>
         </ScrollViewer>
-
     </Grid>
 </Window>
