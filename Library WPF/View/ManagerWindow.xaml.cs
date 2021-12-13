@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library_WPF.Model;
+using Library_WPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,14 +19,15 @@ namespace Library_WPF.View
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        public ManagerWindow()
+        public ManagerWindow(Salesman currentSalesman)
         {
             InitializeComponent();
+            this.DataContext = new ManagerViewModel(this, currentSalesman, grid);
         }
 
         private void grid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ((ManagerViewModel)this.DataContext).CheckCommand();
         }
     }
 }

@@ -121,7 +121,6 @@ namespace Library_WPF.ViewModel
                         if (admin.Password == Password)
                         {
                             mainWindow.Visibility = Visibility.Hidden;
-                            MessageBox.Show("Test Admin");
                             AdminWindow adminWindow = new AdminWindow();
                             adminWindow.ShowDialog();
                             mainWindow.Close();
@@ -133,9 +132,9 @@ namespace Library_WPF.ViewModel
                         loginfind = true;
                         if (salesman.Password == Password)
                         {
-                            //mainWindow.Visibility = Visibility.Hidden;
-                            MessageBox.Show("Test Salesman");
-
+                            mainWindow.Visibility = Visibility.Hidden;
+                            ManagerWindow managerWindow = new ManagerWindow(salesman);
+                            managerWindow.ShowDialog();
                             mainWindow.Close();
                             return;
                         }

@@ -749,84 +749,91 @@ namespace Library_WPF.Service
         }
         public void AddNewValue(TableAction tableAction, ref DataGrid dataGrid)
         {
-            string addQuery = null;
-            switch (tableAction)
+            try
             {
-                case TableAction.ShowCustomers:
-                    {
-                        addQuery = "INSERT INTO Customers(FirstName, LastName, Login, Password) " +
-                        "VALUES(@FirstName, @LastName, @Login, @Password)";
-                        string firstName = ((DataRowView)dataGrid.SelectedItem).Row["FirstName"].ToString();
-                        string lastName = ((DataRowView)dataGrid.SelectedItem).Row["LastName"].ToString();
-                        string login = ((DataRowView)dataGrid.SelectedItem).Row["Login"].ToString();
-                        string password = ((DataRowView)dataGrid.SelectedItem).Row["Password"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { FirstName = firstName, LastName = lastName, Login = login, Password = password });
-                    }
-                    break;
-                case TableAction.ShowManagers:
-                    {
-                        addQuery = "INSERT INTO Salesmen(FirstName, LastName, Login, Password) " +
-                        "VALUES(@FirstName, @LastName, @Login, @Password)";
-                        string firstName = ((DataRowView)dataGrid.SelectedItem).Row["FirstName"].ToString();
-                        string lastName = ((DataRowView)dataGrid.SelectedItem).Row["LastName"].ToString();
-                        string login = ((DataRowView)dataGrid.SelectedItem).Row["Login"].ToString();
-                        string password = ((DataRowView)dataGrid.SelectedItem).Row["Password"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { FirstName = firstName, LastName = lastName, Login = login, Password = password });
-                    }
-                    break;
-                case TableAction.ShowAdmins:
-                    {
-                        addQuery = "INSERT INTO Admins(Login, Password) " +
-                        "VALUES(@Login, @Password)";
-                        string login = ((DataRowView)dataGrid.SelectedItem).Row["Login"].ToString();
-                        string password = ((DataRowView)dataGrid.SelectedItem).Row["Password"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { Login = login, Password = password });
-                    }
-                    break;
-                case TableAction.ShowAuthors:
-                    {
-                        addQuery = "INSERT INTO Authors(FirstName, LastName) " +
-                        "VALUES(@FirstName, @LastName)";
-                        string firstName = ((DataRowView)dataGrid.SelectedItem).Row["FirstName"].ToString();
-                        string lastName = ((DataRowView)dataGrid.SelectedItem).Row["LastName"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { FirstName = firstName, LastName = lastName });
-                    }
-                    break;
-                case TableAction.ShowPublishers:
-                    {
-                        addQuery = "INSERT INTO Publishers(Name) " +
-                        "VALUES(@Name)";
-                        string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { Name = name });
-                    }
-                    break;
-                case TableAction.ShowGenres:
-                    {
-                        addQuery = "INSERT INTO Genres(Name) " +
-                        "VALUES(@Name)";
-                        string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { Name = name });
-                    }
-                    break;
-                case TableAction.ShowStocks:
-                    {
-                        addQuery = "INSERT INTO Stocks(Name) " +
+                string addQuery = null;
+                switch (tableAction)
+                {
+                    case TableAction.ShowCustomers:
+                        {
+                            addQuery = "INSERT INTO Customers(FirstName, LastName, Login, Password) " +
+                            "VALUES(@FirstName, @LastName, @Login, @Password)";
+                            string firstName = ((DataRowView)dataGrid.SelectedItem).Row["FirstName"].ToString();
+                            string lastName = ((DataRowView)dataGrid.SelectedItem).Row["LastName"].ToString();
+                            string login = ((DataRowView)dataGrid.SelectedItem).Row["Login"].ToString();
+                            string password = ((DataRowView)dataGrid.SelectedItem).Row["Password"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { FirstName = firstName, LastName = lastName, Login = login, Password = password });
+                        }
+                        break;
+                    case TableAction.ShowManagers:
+                        {
+                            addQuery = "INSERT INTO Salesmen(FirstName, LastName, Login, Password) " +
+                            "VALUES(@FirstName, @LastName, @Login, @Password)";
+                            string firstName = ((DataRowView)dataGrid.SelectedItem).Row["FirstName"].ToString();
+                            string lastName = ((DataRowView)dataGrid.SelectedItem).Row["LastName"].ToString();
+                            string login = ((DataRowView)dataGrid.SelectedItem).Row["Login"].ToString();
+                            string password = ((DataRowView)dataGrid.SelectedItem).Row["Password"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { FirstName = firstName, LastName = lastName, Login = login, Password = password });
+                        }
+                        break;
+                    case TableAction.ShowAdmins:
+                        {
+                            addQuery = "INSERT INTO Admins(Login, Password) " +
+                            "VALUES(@Login, @Password)";
+                            string login = ((DataRowView)dataGrid.SelectedItem).Row["Login"].ToString();
+                            string password = ((DataRowView)dataGrid.SelectedItem).Row["Password"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { Login = login, Password = password });
+                        }
+                        break;
+                    case TableAction.ShowAuthors:
+                        {
+                            addQuery = "INSERT INTO Authors(FirstName, LastName) " +
+                            "VALUES(@FirstName, @LastName)";
+                            string firstName = ((DataRowView)dataGrid.SelectedItem).Row["FirstName"].ToString();
+                            string lastName = ((DataRowView)dataGrid.SelectedItem).Row["LastName"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { FirstName = firstName, LastName = lastName });
+                        }
+                        break;
+                    case TableAction.ShowPublishers:
+                        {
+                            addQuery = "INSERT INTO Publishers(Name) " +
                             "VALUES(@Name)";
-                        string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
-                        executor.InsertUpdateDelete(addQuery, new { Name = name });
-                    }
-                    break;
-                case TableAction.ShowBooks:
-                case TableAction.ShowSales:
-                case TableAction.ShowShelvedBooks:
-                case TableAction.ShowStockBooks:
-                    AdditionWindow window = new AdditionWindow(tableAction, executor);
-                    window.ShowDialog();
-                    break;
-                case TableAction.None:
-                    break;
-                default:
-                    break;
+                            string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { Name = name });
+                        }
+                        break;
+                    case TableAction.ShowGenres:
+                        {
+                            addQuery = "INSERT INTO Genres(Name) " +
+                            "VALUES(@Name)";
+                            string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { Name = name });
+                        }
+                        break;
+                    case TableAction.ShowStocks:
+                        {
+                            addQuery = "INSERT INTO Stocks(Name) " +
+                                "VALUES(@Name)";
+                            string name = ((DataRowView)dataGrid.SelectedItem).Row["Name"].ToString();
+                            executor.InsertUpdateDelete(addQuery, new { Name = name });
+                        }
+                        break;
+                    case TableAction.ShowBooks:
+                    case TableAction.ShowSales:
+                    case TableAction.ShowShelvedBooks:
+                    case TableAction.ShowStockBooks:
+                        AdditionWindow window = new AdditionWindow(tableAction, executor);
+                        window.ShowDialog();
+                        break;
+                    case TableAction.None:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception) // I could use SelectedItem'?', but the user will not know what he is doing wrong
+            {
+                MessageBox.Show("Error, check the selected row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
