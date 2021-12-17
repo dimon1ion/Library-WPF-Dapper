@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library_WPF.Model;
+using Library_WPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +19,15 @@ namespace Library_WPF.View
     /// </summary>
     public partial class CustomerWindow : Window
     {
-        public CustomerWindow()
+        public CustomerWindow(Customer currentCustomer)
         {
             InitializeComponent();
+            this.DataContext = new CustomerViewModel(this, grid, currentCustomer);
+        }
+
+        private void grid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ((CustomerViewModel)this.DataContext).CheckCommand();
         }
     }
 }

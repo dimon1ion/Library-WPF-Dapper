@@ -79,6 +79,32 @@ BookId int NOT NULL FOREIGN KEY REFERENCES Books(Id) ON DELETE CASCADE,
 StockPercent int NOT NULL CONSTRAINT PercentCheck CHECK (0 < StockPercent AND StockPercent <= 100)
 )
 
+CREATE TRIGGER BookSales_Insert
+ON BookSales
+AFTER INSERT
+AS
+if(0 <= ALL (SELECT Quantity - 1 FROM Books, inserted WHERE inserted.BookId = Books.Id))
+BEGIN
+	UPDATE Books
+	Set Quantity = (SELECT TOP 1 Books.Quantity FROM Books, inserted WHERE inserted.BookId = Books.Id) - 1
+	WHERE (SELECT BookId FROM inserted) = Books.Id
+END
+else
+BEGIN
+	DELETE FROM BookSales
+	WHERE BookSales.Id = ANY (SELECT inserted.Id FROM inserted)
+END
+
+CREATE TRIGGER ShelvedBooks_Delete
+ON ShelvedBooks
+AFTER DELETE
+AS
+UPDATE Books
+SET Quantity = (SELECT TOP 1 Books.Quantity FROM Books, deleted WHERE deleted.BookId = Books.Id) + 1
+WHERE Books.Id = (SELECT deleted.BookId FROM deleted)
+
+--//////////////////////////////////////////////////////////////////////////////////
+
 --DROP TABLE StocksBooks
 --DROP TABLE Stocks
 --DROP TABLE ShelvedBooks
@@ -98,6 +124,12 @@ StockPercent int NOT NULL CONSTRAINT PercentCheck CHECK (0 < StockPercent AND St
 
 --INSERT INTO Authors(FirstName, LastName)
 --VALUES ('Keisy', 'Uest')
+
+--INSERT INTO Authors(FirstName, LastName)
+--VALUES ('Kanye', 'Uest')
+
+--INSERT INTO Authors(FirstName, LastName)
+--VALUES ('Hel', 'Bobs')
 
 --INSERT INTO Publishers(Name)
 --VALUES ('Idk')
@@ -170,5 +202,93 @@ FROM StocksBooks, Stocks, Books, Authors
 WHERE StocksBooks.StockId = Stocks.Id AND StocksBooks.BookId = Books.Id 
 AND Books.AuthorId = Authors.Id
 
-INSERT INTO StocksBooks(StockId, BookId, StockPercent)
-VALUES ()
+
+
+SELECT * FROM Books
+
+UPDATE Books
+SET Quantity = 0
+WHERE Books.Id = 2003
+
+INSERT INTO BookSales(BookId, CustomerId, Purchase_date, Selling_price)
+VALUES (2003, 1, GETDATE(), 10)
+
+SELECT * FROM BookSales
+
+SELECT Books.Id, Books.Name, Authors.FirstName + ' ' + Authors.LastName[Author],
+	Genres.Name, Publishers.Name, Books.Number_of_pages, Books.Year_of_publishing,
+	Books.Continuation,
+	(SELECT TOP 1 Stocks.Name FROM Stocks, StocksBooks WHERE StocksBooks.BookId = Books.Id AND StocksBooks.StockId = Stocks.Id)[Stock],
+	Books.Selling_price,
+	(Books.Selling_price * (CAST((100 - (SELECT TOP 1 StocksBooks.StockPercent FROM StocksBooks WHERE StocksBooks.BookId = Books.Id)) as float) / 100))[SellWithStock]
+FROM Books, Authors, Genres, Publishers
+WHERE Books.AuthorId = Authors.Id AND Books.GenreId = Genres.Id AND Quantity > 0
+AND Books.PublisherId = Publishers.Id
+
+SELECT Books.Id, Books.Name, Authors.FirstName + ' ' + Authors.LastName[Author],
+	Genres.Name, Publishers.Name, Books.Number_of_pages, Books.Year_of_publishing,
+	Books.Continuation,
+	(SELECT TOP 1 Stocks.Name FROM Stocks, StocksBooks WHERE StocksBooks.BookId = Books.Id AND StocksBooks.StockId = Stocks.Id)[Stock],
+	Books.Selling_price,
+	(Books.Selling_price * (CAST((100 - (SELECT TOP 1 StocksBooks.StockPercent FROM StocksBooks WHERE StocksBooks.BookId = Books.Id)) as float) / 100))[SellWithStock]
+FROM Books, Authors, Genres, Publishers
+WHERE Books.AuthorId = Authors.Id AND Books.GenreId = Genres.Id AND Quantity > 0
+AND Books.PublisherId = Publishers.Id
+ORDER BY Books.Id DESC
+
+
+SELECT * FROM Books
+SELECT * FROM StocksBooks
+
+
+SELECT Books.Id, Books.Name, Authors.FirstName + ' ' + Authors.LastName[Author],
+	Genres.Name[Genre], Publishers.Name[Publisher], Books.Number_of_pages, Books.Year_of_publishing,
+	Books.Continuation,
+	(SELECT TOP 1 Stocks.Name FROM Stocks, StocksBooks WHERE StocksBooks.BookId = Books.Id AND StocksBooks.StockId = Stocks.Id)[StockName],
+	Books.Selling_price,
+	(Books.Selling_price * (CAST((100 - (SELECT TOP 1 StocksBooks.StockPercent FROM StocksBooks WHERE StocksBooks.BookId = Books.Id)) as float) / 100))[Total]
+FROM Books, Authors, Genres, Publishers
+WHERE Books.AuthorId = Authors.Id AND Books.GenreId = Genres.Id AND Genres.Name LIKE('%tru%')
+AND Quantity > 0 AND Books.PublisherId = Publishers.Id
+
+--////////////////////////////
+
+SELECT Books.Id, Books.Name, Authors.FirstName + ' ' + Authors.LastName[Author],
+	Genres.Name[Genre], Publishers.Name[Publisher], Books.Number_of_pages, Books.Year_of_publishing,
+	Books.Continuation,
+	(SELECT TOP 1 Stocks.Name FROM Stocks, StocksBooks WHERE StocksBooks.BookId = Books.Id AND StocksBooks.StockId = Stocks.Id)[StockName],
+	Books.Selling_price,
+	(Books.Selling_price * (CAST((100 - (SELECT TOP 1 StocksBooks.StockPercent FROM StocksBooks WHERE StocksBooks.BookId = Books.Id)) as float) / 100))[Total]
+FROM Books, Authors, Genres, Publishers, (SELECT BookSales.BookId, COUNT(BookSales.BookId)[Count]
+											FROM BookSales, Books
+											WHERE BookSales.BookId = Books.Id
+											GROUP BY BookSales.BookId) as Sales
+WHERE Sales.BookId = Books.Id AND Books.AuthorId = Authors.Id AND Books.GenreId = Genres.Id
+AND Quantity > 0 AND Books.PublisherId = Publishers.Id
+ORDER BY Sales.Count DESC
+
+(SELECT BookSales.BookId FROM BookSales, Books
+WHERE BookSales.BookId = Books.Id
+GROUP BY Books.Id
+ORDER BY COUNT(Books.Id)) as Sales
+
+
+SELECT Authors.Id, Authors.FirstName, Authors.LastName, COUNT(Authors.Id) FROM BookSales, Authors, Books
+WHERE BookSales.BookId = Books.Id AND Books.AuthorId = Authors.Id
+GROUP BY Authors.Id, Authors.FirstName, Authors.LastName
+ORDER BY COUNT(Authors.Id) DESC
+
+SELECT Genres.Id, Genres.Name, COUNT(Genres.Id) FROM BookSales, Genres, Books
+WHERE BookSales.BookId = Books.Id AND Books.GenreId = Genres.Id AND DATEDIFF(day, BookSales.Purchase_date, GETDATE()) < 1
+GROUP BY Genres.Id, Genres.Name
+ORDER BY COUNT(Genres.Id) DESC
+
+SELECT * FROM BookSales
+
+SELECT * FROM Customers
+
+SELECT BookSales.Id, '\"' + Books.Name + '\" ' + Authors.FirstName + ' ' + Authors.LastName[Book], Customers.FirstName + ' ' + Customers.LastName[Customer],
+                        BookSales.Purchase_date[PurchaseDate], BookSales.Selling_price[SellingPrice]
+                        FROM BookSales, Books, Customers, Authors
+                        WHERE BookSales.BookId = Books.Id AND BookSales.CustomerId = Customers.Id AND Customers.Id = 4002
+                        AND Books.AuthorId = Authors.Id

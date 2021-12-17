@@ -181,7 +181,7 @@ namespace Library_WPF.ViewModel
 
             _add = new Command(obj =>
             {
-                libraryActions.AddNewValue(_showAction, ref dataGrid);
+                libraryActions.AddNewValueFromGrid(_showAction, ref dataGrid);
                 Refresh();
 
             }, obj =>

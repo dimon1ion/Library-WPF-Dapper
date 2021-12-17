@@ -304,17 +304,17 @@ namespace Library_WPF.ViewModel
                 case TableAction.ShowBooks:
                     AddBookVisible = "Visible";
                     libraryAction.GetDataTable(TableAction.ShowAuthors, out data);
-                    foreach (Author author in libraryAction.authors)
+                    foreach (Author author in libraryAction.Authors)
                     {
                         Authors.Add(author.FirstName + " " + author.LastName);
                     }
                     libraryAction.GetDataTable(TableAction.ShowGenres, out data);
-                    foreach (Genre genre in libraryAction.genres)
+                    foreach (Genre genre in libraryAction.Genres)
                     {
                         Genres.Add(genre.Name);
                     }
                     libraryAction.GetDataTable(TableAction.ShowPublishers, out data);
-                    foreach (Publisher publisher in libraryAction.publishers)
+                    foreach (Publisher publisher in libraryAction.Publishers)
                     {
                         Publishers.Add(publisher.Name);
                     }
@@ -322,12 +322,12 @@ namespace Library_WPF.ViewModel
                 case TableAction.ShowSales:
                     AddSalesVisible = "Visible";
                     libraryAction.GetDataTable(TableAction.ShowBooks, out data);
-                    foreach (ShowBook showBook in libraryAction.showBooks)
+                    foreach (ShowBook showBook in libraryAction.ShowBooks)
                     {
-                        Books.Add(showBook.Name);
+                        Books.Add('"' + showBook.Name + "\" " + showBook.Author);
                     }
                     libraryAction.GetDataTable(TableAction.ShowCustomers, out data);
-                    foreach (Customer customer in libraryAction.customers)
+                    foreach (Customer customer in libraryAction.Customers)
                     {
                         Customers.Add(customer.FirstName + " " + customer.LastName);
                     }
@@ -335,12 +335,12 @@ namespace Library_WPF.ViewModel
                 case TableAction.ShowShelvedBooks:
                     AddShelvedBooksVisible = "Visible";
                     libraryAction.GetDataTable(TableAction.ShowBooks, out data);
-                    foreach (ShowBook showBook in libraryAction.showBooks)
+                    foreach (ShowBook showBook in libraryAction.ShowBooks)
                     {
                         Books.Add(showBook.Name);
                     }
                     libraryAction.GetDataTable(TableAction.ShowCustomers, out data);
-                    foreach (Customer customer in libraryAction.customers)
+                    foreach (Customer customer in libraryAction.Customers)
                     {
                         Customers.Add(customer.FirstName + " " + customer.LastName);
                     }
@@ -349,12 +349,12 @@ namespace Library_WPF.ViewModel
 
                     AddStockBooksVisible = "Visible";
                     libraryAction.GetDataTable(TableAction.ShowStocks, out data);
-                    foreach (Stock stock in libraryAction.stocks)
+                    foreach (Stock stock in libraryAction.Stocks)
                     {
                         Stocks.Add(stock.Name);
                     }
                     libraryAction.GetDataTable(TableAction.ShowBooks, out data);
-                    foreach (ShowBook showBook in libraryAction.showBooks)
+                    foreach (ShowBook showBook in libraryAction.ShowBooks)
                     {
                         Books.Add(showBook.Name);
                     }
@@ -370,19 +370,14 @@ namespace Library_WPF.ViewModel
             {
                 try
                 {
-                    string addQuery;
                     switch (showTable)
                     {
                         case TableAction.ShowBooks:
                             {
-                                addQuery = "INSERT INTO Books(Name, AuthorId, GenreId, PublisherId, " +
-                                "Number_of_pages, Year_of_publishing, Cost_price, Selling_price, Continuation, Quantity) " +
-                                "VALUES(@Name, @AuthorId, @GenreId, @PublisherId, @Number_of_pages, @Year_of_publishing, @Cost_price, @Selling_price," +
-                                "@Continuation, @Quantity)";
                                 int authorId = -1;
                                 int genreId = -1;
                                 int publisherId = -1;
-                                foreach (Author author in libraryAction.authors)
+                                foreach (Author author in libraryAction.Authors)
                                 {
                                     if ((author.FirstName + " " + author.LastName) == SelectedAuthor)
                                     {
@@ -390,7 +385,7 @@ namespace Library_WPF.ViewModel
                                         break;
                                     }
                                 }
-                                foreach (Genre genre in libraryAction.genres)
+                                foreach (Genre genre in libraryAction.Genres)
                                 {
                                     if (genre.Name == SelectedGenre)
                                     {
@@ -398,7 +393,7 @@ namespace Library_WPF.ViewModel
                                         break;
                                     }
                                 }
-                                foreach (Publisher publisher in libraryAction.publishers)
+                                foreach (Publisher publisher in libraryAction.Publishers)
                                 {
                                     if (publisher.Name == SelectedPublisher)
                                     {
@@ -407,104 +402,72 @@ namespace Library_WPF.ViewModel
                                     }
                                 }
 
-                                executor.InsertUpdateDelete(addQuery, new
-                                {
-                                    Name = Name,
-                                    AuthorId = authorId,
-                                    GenreId = genreId,
-                                    PublisherId = publisherId,
-                                    Number_of_pages = Int32.Parse(NumOfPages),
-                                    Year_of_publishing = Int32.Parse(YearOfPublishing),
-                                    Cost_price = Decimal.Parse(CostPrice),
-                                    Selling_price = Decimal.Parse(SellingPrice),
-                                    Continuation = _checkedContinuation,
-                                    Quantity = Quantity
-                                });
-
+                                libraryAction.AddBook(Name, authorId, genreId, publisherId,
+                                    Int32.Parse(NumOfPages), Int32.Parse(YearOfPublishing), 
+                                    Decimal.Parse(CostPrice), Decimal.Parse(SellingPrice), _checkedContinuation, Int32.Parse(Quantity));
                             }
                             break;
                         case TableAction.ShowSales:
                             {
-                                addQuery = "INSERT INTO BookSales(BookId, CustomerId, Purchase_date, Selling_price) " +
-                                    "VALUES(@BookId, @CustomerId, @Purchase_date, @Selling_price)";
                                 int bookId = -1;
                                 int customerId = -1;
-                                foreach (ShowBook showBook in libraryAction.showBooks)
+                                foreach (ShowBook showBook in libraryAction.ShowBooks)
                                 {
-                                    if (showBook.Name == SelectedBookName)
+                                    if ('"' + showBook.Name + "\" " + showBook.Author == SelectedBookName)
                                     {
                                         bookId = showBook.Id;
                                     }
                                 }
-                                foreach (Customer customer in libraryAction.customers)
+                                foreach (Customer customer in libraryAction.Customers)
                                 {
                                     if (customer.FirstName + " " + customer.LastName == SelectedCustomer)
                                     {
                                         customerId = customer.Id;
                                     }
                                 }
-                                executor.InsertUpdateDelete(addQuery, new
-                                {
-                                    BookId = bookId,
-                                    CustomerId = customerId,
-                                    Purchase_date = DateTime.Parse(SelectedDate.ToString()),
-                                    Selling_price = Decimal.Parse(SellingPrice)
-                                });
+                                libraryAction.AddSale(bookId, customerId, DateTime.Parse(SelectedDate.ToString()), Decimal.Parse(SellingPrice));
                             }
                             break;
                         case TableAction.ShowShelvedBooks:
                             {
-                                addQuery = "INSERT INTO ShelvedBooks(BookId, CustomerId) " +
-                                "VALUES(@BookId, @CustomerId)";
                                 int bookId = -1;
                                 int customerId = -1;
-                                foreach (ShowBook showBook in libraryAction.showBooks)
+                                foreach (ShowBook showBook in libraryAction.ShowBooks)
                                 {
                                     if (showBook.Name == SelectedBookName)
                                     {
                                         bookId = showBook.Id;
                                     }
                                 }
-                                foreach (Customer customer in libraryAction.customers)
+                                foreach (Customer customer in libraryAction.Customers)
                                 {
                                     if (customer.FirstName + " " + customer.LastName == SelectedCustomer)
                                     {
                                         customerId = customer.Id;
                                     }
                                 }
-                                executor.InsertUpdateDelete(addQuery, new
-                                {
-                                    BookId = bookId,
-                                    CustomerId = customerId
-                                });
+                                libraryAction.AddShelvedBook(bookId, customerId);
                             }
                             break;
                         case TableAction.ShowStockBooks:
                             {
-                                addQuery = "INSERT INTO StocksBooks(StockId, BookId, StockPercent) " +
-                                "VALUES(@StockId, @BookId, @StockPercent)";
                                 int stockId = -1;
                                 int bookId = -1;
-                                foreach (Stock stock in libraryAction.stocks)
+                                foreach (Stock stock in libraryAction.Stocks)
                                 {
                                     if (stock.Name == SelectedStock)
                                     {
                                         stockId = stock.Id;
                                     }
                                 }
-                                foreach (ShowBook showBook in libraryAction.showBooks)
+                                foreach (ShowBook showBook in libraryAction.ShowBooks)
                                 {
                                     if (showBook.Name == SelectedBookName)
                                     {
                                         bookId = showBook.Id;
                                     }
                                 }
-                                executor.InsertUpdateDelete(addQuery, new
-                                {
-                                    StockId = stockId,
-                                    BookId = bookId,
-                                    StockPercent = StockPercent
-                                });
+                                libraryAction.AddStockBook(stockId, bookId, Int32.Parse(StockPercent));
                             }
                             break;
                         case TableAction.None:
@@ -514,10 +477,10 @@ namespace Library_WPF.ViewModel
 
                     }
                 }
-                //catch (Exception)
-                //{
-                //    MessageBox.Show("Error, invalid data entered", "Addition Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
+                catch (Exception)
+                {
+                    MessageBox.Show("Error, invalid data entered", "Addition Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 finally
                 {
                     additionWindow.Close();

@@ -5,8 +5,120 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_WPF.View"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800">
+        Title="CustomerWindow" Height="450" Width="800" Background="Chocolate">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="grid" Grid.Column="1" Grid.Row="1" 
+                  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" SelectionChanged="grid_SelectionChanged"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label HorizontalAlignment="Right" VerticalAlignment="Top"
+                    FontSize="14" FontFamily="Cooper Black" Foreground="Wheat" FontStyle="Normal" FontWeight="Normal">
+                <TextBlock>
+                    <Run Text="Hello customer"/>
+                    <Run Text="{Binding CustomerName}"/>
+                    <Run Text="!"/>
+                </TextBlock>
+            </Label>
+            <ScrollViewer Grid.Row="1"
+                          VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                          VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Height="22" Width="100" ItemsSource="{Binding ComboBoxFindFilter}"
+                              SelectedItem="{Binding SelectedFilter}"/>
+                    <TextBox Height="22" FontSize="14" Width="140" Text="{Binding SearchText}"/>
+                    <Button Height="22" Width="22" Content="->" FontWeight="Bold" Command="{Binding FindByFilter}"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.RowSpan="3">
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Height" Value="55"/>
+                    <Setter Property="Width" Value="110"/>
+                    <Setter Property="Margin" Value="2,1,2,0"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3.5*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Choose Action" FontSize="16" FontFamily="Algerian" Foreground="AliceBlue"
+                   HorizontalAlignment="Center" VerticalAlignment="Bottom" FontStyle="Italic"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                <TabPanel>
+                    <Button Content="Show Books" Command="{Binding ShowBookForCustomer}">
+                        <Button.ToolTip>
+                            <ToolTip Content="Show and change only book options"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Command="{Binding ShowNewBookForCustomer}" Content="Show New books"/>
+                    <Button Command="{Binding ShowPopularBooksForCustomer}">
+                        <TextBlock>
+                            Show Popular <LineBreak/> books
+                        </TextBlock>
+                    </Button>
+                    <Button Command="{Binding ShowPopularAuthors}">
+                        <TextBlock>
+                            Show Popular <LineBreak/> Authors
+                        </TextBlock>
+                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding ShowPopularGenres}">
+                            <TextBlock>
+                            Show Popular <LineBreak/> Genres
+                            </TextBlock>
+                        </Button>
+                        <ComboBox Height="30" Width="100" ItemsSource="{Binding FilterGenre}" SelectedItem="{Binding SelectedGenreFilter}"
+                                  FontWeight="Bold"/>
+                    </StackPanel>
+                    <Button Command="{Binding ShowShelvedBooks}">
+                        <TextBlock>
+                            Show Shelved <LineBreak/> books
+                        </TextBlock>
+                    </Button>
+                    <Button Content="Show purchases" Command="{Binding ShowPurchase}"/>
+                </TabPanel>
+            </ScrollViewer>
+
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" Grid.Column="1" 
+                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" 
+                      HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TabPanel>
+                <TabPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="35"/>
+                        <Setter Property="Width" Value="80"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Style.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </TabPanel.Resources>
+                <Button Content="Cancel" Command="{Binding CancelPostpone}" Background="Red" Foreground="White"/>
+                <Button Content="Postpone" Command="{Binding PostponeBook}" Background="Yellow"/>
+                <Button Content="Buy" Command="{Binding BuyBook}" Background="Green" Foreground="White"/>
+            </TabPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

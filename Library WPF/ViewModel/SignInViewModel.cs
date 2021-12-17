@@ -144,12 +144,13 @@ namespace Library_WPF.ViewModel
                         loginfind = true;
                         if (customer.Password == Password)
                         {
-
+                            mainWindow.Visibility = Visibility.Hidden;
+                            MessageBox.Show("Test Customer");
+                            CustomerWindow customerWindow = new CustomerWindow(customer);
+                            customerWindow.ShowDialog();
                             mainWindow.Close();
                             return;
                         }
-                        //mainWindow.Visibility = Visibility.Hidden;
-                        MessageBox.Show("Test Customer");
                     }
                     if (!loginfind)
                     {
