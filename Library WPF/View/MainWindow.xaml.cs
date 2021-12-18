@@ -28,6 +28,12 @@ namespace Library_WPF.View
         {
             InitializeComponent();
             this.DataContext = new SignInViewModel(this);
+            DapperExecutor dapper = new DapperExecutor();
+            int res = dapper.GetFirst<int>("SELECT COUNT(Admins.Id) FROM Admins");
+            if (res == 0)
+            {
+                _ = dapper.InsertUpdateDelete("INSERT INTO Admins(Login, Password) VALUES ('admin', 'admin')");
+            }
         }
 
         private void Label_MouseDown(object sender, MouseButtonEventArgs e)
