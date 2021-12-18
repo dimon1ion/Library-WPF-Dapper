@@ -26,42 +26,6 @@ namespace Library_WPF.View
         {
             InitializeComponent();
             this.DataContext = new AdminViewModel(this, grid);
-            
-            //DapperExecutor dapper = new DapperExecutor();
-            //data.Columns.Add("Id");
-            //data.Columns.Add("FirstName");
-            //data.Columns.Add("LastName");
-            //data.Columns.Add("Login");
-            //data.Columns.Add("Password");
-
-            //var customer = dapper.Get<Customer>("Select * FROM Customers");
-
-            //foreach (var item in customer)
-            //{
-            //    DataRow row = data.NewRow();
-            //    row["Id"] = item.Id;
-            //    row["FirstName"] = item.FirstName;
-            //    row["LastName"] = item.LastName;
-            //    row["Login"] = item.Login;
-            //    row["Password"] = item.Password;
-            //    data.Rows.Add(row);
-
-            //}
-
-            //grid.ItemsSource = data.AsDataView();
-        }
-
-        private void but_Click(object sender, RoutedEventArgs e)
-        {
-            //DataRow row = data.NewRow();
-            //row["Id"] = 54;
-            //row["FirstName"] = "kak";
-            //row["LastName"] = "dela";
-            //row["Login"] = "a?";
-            //row["Password"] = "ответь";
-            //data.Rows.Add(row);
-
-            //grid.ItemsSource = data.AsDataView();
         }
 
         private void grid_SelectionChanged(object sender, SelectionChangedEventArgs e)

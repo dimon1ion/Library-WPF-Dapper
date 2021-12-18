@@ -45,7 +45,6 @@
             <ScrollViewer Grid.Row="0" Visibility="{Binding AddShelvedBooksVisible}" 
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
-                <!--Visibility="{Binding AddShelvedBooksVisible}"-->
                 <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Book:"/>
@@ -62,7 +61,6 @@
             <ScrollViewer Grid.Row="0" Visibility="{Binding AddSalesVisible}" 
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
-                <!--Visibility="{Binding AddSalesVisible}"-->
                 <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Book:"/>
@@ -88,7 +86,6 @@
             <ScrollViewer Grid.Row="0" Visibility="{Binding AddBookVisible}" 
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
-                <!--Visibility="{Binding AddBookVisible}"-->
                 <TabPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Name:"/>

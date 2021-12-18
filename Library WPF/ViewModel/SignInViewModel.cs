@@ -145,7 +145,6 @@ namespace Library_WPF.ViewModel
                         if (customer.Password == Password)
                         {
                             mainWindow.Visibility = Visibility.Hidden;
-                            MessageBox.Show("Test Customer");
                             CustomerWindow customerWindow = new CustomerWindow(customer);
                             customerWindow.ShowDialog();
                             mainWindow.Close();
